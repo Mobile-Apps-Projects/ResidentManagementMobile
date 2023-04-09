@@ -6,13 +6,118 @@
     android:background="#FFFFFF"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HOME"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="328dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="27dp"
+        android:background="@drawable/linear_layout_bg"
+        android:gravity="center_horizontal|top|center_vertical"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Mi Balance"
+            android:textColor="#F2F2F2"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="bottom"
+            android:text="Deuda Total"
+            android:textColor="#F2F2F2"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/totalDebtTV"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="$ 1.380.000"
+            android:textColor="#F2F2F2"
+            android:textSize="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="?android:attr/ambientShadowAlpha"
+                android:clickable="false"
+                android:fontFamily="sans-serif-medium"
+                android:text="Fecha límite de pago:"
+                android:textColor="#F2F2F2" />
+
+            <TextView
+                android:id="@+id/paymentDeadlineTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="6 de Marzo del 2023"
+                android:textColor="#F2F2F2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="?android:attr/ambientShadowAlpha"
+                android:fontFamily="sans-serif-medium"
+                android:text="Facturas pendientes:"
+                android:textColor="#F2F2F2" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#F2F2F2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="?android:attr/ambientShadowAlpha"
+                android:fontFamily="sans-serif-medium"
+                android:text="Número de cuenta:"
+                android:textColor="#F2F2F2" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="#F2F2F2" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/payment_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="38dp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
