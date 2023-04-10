@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbar.setOnMenuItemClickListener { option: MenuItem ->
             when (option.itemId) {
-                R.id.notifications -> showFragment(notificationsFragment)
+                R.id.back -> showFragment(notificationsFragment)
             }
             true
         }
