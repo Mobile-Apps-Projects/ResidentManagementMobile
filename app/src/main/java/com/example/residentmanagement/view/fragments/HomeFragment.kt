@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.residentmanagement.databinding.FragmentHomeBinding
 import com.example.residentmanagement.view.PaymentActivity
+import com.example.residentmanagement.view.adapters.NotificationAdapter
 
 
 class HomeFragment : Fragment() {
@@ -17,6 +19,9 @@ class HomeFragment : Fragment() {
 
     //Views models
 
+    //Adapters
+    private val adapter = NotificationAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +29,12 @@ class HomeFragment : Fragment() {
     ): View {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        //RecyclerView
+        binding.notificationsList.adapter = adapter
+        binding.notificationsList.layoutManager = LinearLayoutManager(activity)
+        binding.notificationsList.setHasFixedSize(true)
+
 
         binding.paymentButton.setOnClickListener{
             val intent= Intent(activity, PaymentActivity::class.java)
