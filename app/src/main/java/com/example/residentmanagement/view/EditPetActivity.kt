@@ -13,5 +13,10 @@ class EditPetActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        binding.savePetBT.setOnClickListener {
+            finish()
+
+        }
     }
 }

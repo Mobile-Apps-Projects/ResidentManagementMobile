@@ -60,12 +60,12 @@
                 android:textColor="@color/main_blue"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-                app:layout_constraintStart_toEndOf="@+id/imageButton2"
-                app:layout_constraintTop_toTopOf="@+id/imageButton2" />
+                app:layout_constraintBottom_toBottomOf="@+id/addButton"
+                app:layout_constraintStart_toEndOf="@+id/addButton"
+                app:layout_constraintTop_toTopOf="@+id/addButton" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/addButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_button_blue_opacity"

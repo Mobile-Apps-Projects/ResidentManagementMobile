@@ -13,5 +13,9 @@ class EditResidentActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        binding.saveResidentInfoBtn.setOnClickListener {
+            finish()
+        }
     }
 }

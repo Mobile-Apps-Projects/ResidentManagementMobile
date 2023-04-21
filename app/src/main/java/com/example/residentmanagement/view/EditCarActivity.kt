@@ -13,5 +13,12 @@ class EditCarActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        binding.saveCarBT2.setOnClickListener {
+            finish()
+
+        }
+
+
     }
 }

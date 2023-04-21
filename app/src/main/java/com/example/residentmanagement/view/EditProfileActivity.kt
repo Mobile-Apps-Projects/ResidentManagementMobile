@@ -1,5 +1,6 @@
 package com.example.residentmanagement.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,24 @@ class EditProfileActivity : AppCompatActivity() {
         val title = intent.getStringExtra("fragment")
 
         binding.toolbar.title = title
+
+        binding.addButton.setOnClickListener {
+            var intent:Intent? =null
+            when (title) {
+
+                "MASCOTAS" -> {
+                    intent = Intent(this, EditPetActivity::class.java)
+                }
+                "VEHICULOS" -> {
+                    intent = Intent(this, EditCarActivity::class.java)
+                }
+                "RESIDENTES" -> {
+                    intent = Intent(this, EditResidentActivity::class.java)
+                }
+            }
+           intent?.let { startActivity(it) }
+
+        }
 
         binding.toolbar.setNavigationOnClickListener {
             finish()

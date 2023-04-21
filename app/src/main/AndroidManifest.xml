@@ -12,13 +12,13 @@
         android:theme="@style/Theme.ResidentManagement"
         tools:targetApi="31">
         <activity
-            android:name=".EditResidentActivity"
+            android:name=".view.EditResidentActivity"
             android:exported="false" />
         <activity
-            android:name=".EditCarsActivity"
+            android:name=".view.EditCarActivity"
             android:exported="false" />
         <activity
-            android:name=".EditPetsActivity"
+            android:name=".view.EditPetActivity"
             android:exported="false" />
         <activity
             android:name=".view.EditProfileActivity"
