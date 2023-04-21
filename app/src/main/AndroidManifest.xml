@@ -12,6 +12,18 @@
         android:theme="@style/Theme.ResidentManagement"
         tools:targetApi="31">
         <activity
+            android:name=".EditResidentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditCarsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditPetsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.PaymentActivity"
             android:exported="false" />
         <activity

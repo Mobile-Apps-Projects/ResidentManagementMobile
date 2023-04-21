@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.residentmanagement.databinding.FragmentProfileBinding
+import com.example.residentmanagement.view.EditProfileActivity
 import com.example.residentmanagement.view.LoginActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,6 +32,24 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        binding.carsButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            intent.putExtra("fragment", "VEHICULOS")
+            startActivity(intent)
+        }
+
+        binding.petsButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            intent.putExtra("fragment", "MASCOTAS")
+            startActivity(intent)
+        }
+
+        binding.residentButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            intent.putExtra("fragment", "RESIDENTES")
+            startActivity(intent)
         }
 
 

@@ -1,15 +1,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="@color/main_blue" />
+            <solid android:color="#1FFFFFFF" />
             <size android:width="40dp" android:height="40dp" />
             <padding android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
-            <solid android:color="#FFFFFF" />
-            <size android:width="40dp" android:height="40dp" />
+            <solid android:color="#1F4158D9" android:alpha="0.12"/>            <size android:width="40dp" android:height="40dp" />
             <padding android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp" />
         </shape>
     </item>
