@@ -1,5 +1,6 @@
 package com.example.residentmanagement.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,6 +11,8 @@ import com.example.residentmanagement.view.fragments.HomeFragment
 import com.example.residentmanagement.view.fragments.NotificationsFragment
 import com.example.residentmanagement.view.fragments.ProfileFragment
 import com.example.residentmanagement.view.fragments.ReserveFragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +27,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        if (Firebase.auth.currentUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         binding.bottomNavigator.setOnItemSelectedListener { option: MenuItem ->
             when (option.itemId) {

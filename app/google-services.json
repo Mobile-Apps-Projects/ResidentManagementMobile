@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "628490213253",
+    "firebase_url": "https://pokedex-ed19f-default-rtdb.firebaseio.com",
+    "project_id": "pokedex-ed19f",
+    "storage_bucket": "pokedex-ed19f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628490213253:android:044b4cb3d1e4e0ba0c16ec",
+        "android_client_info": {
+          "package_name": "com.example.pokebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628490213253-r901hhm00885s9dsmm047b00r7tti36q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGGM9lA7z7jXod3M-5qTf3wYnuOoJbfww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628490213253-r901hhm00885s9dsmm047b00r7tti36q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628490213253:android:a8446e84e63c88b60c16ec",
+        "android_client_info": {
+          "package_name": "com.example.residentmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628490213253-r901hhm00885s9dsmm047b00r7tti36q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGGM9lA7z7jXod3M-5qTf3wYnuOoJbfww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628490213253-r901hhm00885s9dsmm047b00r7tti36q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
