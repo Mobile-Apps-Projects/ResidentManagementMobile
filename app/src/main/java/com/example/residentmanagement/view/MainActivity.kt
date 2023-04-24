@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.example.residentmanagement.R
 import com.example.residentmanagement.databinding.ActivityMainBinding
@@ -11,6 +12,7 @@ import com.example.residentmanagement.view.fragments.HomeFragment
 import com.example.residentmanagement.view.fragments.NotificationsFragment
 import com.example.residentmanagement.view.fragments.ProfileFragment
 import com.example.residentmanagement.view.fragments.ReserveFragment
+import com.example.residentmanagement.viewmodel.LoginViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -24,15 +26,22 @@ class MainActivity : AppCompatActivity() {
     private val configFragment: ProfileFragment = ProfileFragment.newInstance()
     private val notificationsFragment: NotificationsFragment = NotificationsFragment.newInstance()
 
+    //View model
+    private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        if (Firebase.auth.currentUser == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+        viewModel.auth.observe(this) {
+            if (it == 0) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
+
+        viewModel.getAuthState()
 
         binding.bottomNavigator.setOnItemSelectedListener { option: MenuItem ->
             when (option.itemId) {

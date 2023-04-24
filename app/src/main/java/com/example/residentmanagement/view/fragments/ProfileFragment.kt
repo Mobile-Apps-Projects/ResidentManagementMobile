@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.residentmanagement.databinding.FragmentProfileBinding
 import com.example.residentmanagement.view.EditProfileActivity
 import com.example.residentmanagement.view.LoginActivity
+import com.example.residentmanagement.viewmodel.LoginViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -18,7 +21,8 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
 
     //Views models
-
+    //View model
+    private val viewModel: LoginViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +32,7 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.signOut.setOnClickListener {
-            Firebase.auth.signOut()
+            viewModel.signOut()
             val intent = Intent(activity, LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()

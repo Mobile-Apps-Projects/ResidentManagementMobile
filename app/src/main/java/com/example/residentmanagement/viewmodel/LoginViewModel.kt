@@ -1,10 +1,9 @@
 package com.example.residentmanagement.viewmodel
 
 import android.util.Log
-import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.residentmanagement.model.Auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -15,24 +14,46 @@ import kotlinx.coroutines.withContext
 
 
 class LoginViewModel:ViewModel(){
-    private var _auth=Auth(false,"")
-    val observableAuth=MutableLiveData(Auth(false,""))
+
+    private val _auth=MutableLiveData<Int>()
+    val auth:LiveData<Int> get()=_auth
+
+    fun getAuthState(){
+        if(Firebase.auth.currentUser!=null) {
+            _auth.value = AuthState.AUTH
+        }else{
+            _auth.value = AuthState.NO_AUTH
+        }
+    }
 
     fun signIn(email:String, password:String){
+        _auth.value=AuthState.LOADING
+        var status:Int
         viewModelScope.launch(Dispatchers.IO) {
                 try {
                     val response=Firebase.auth.signInWithEmailAndPassword(email,password).await()
-                    _auth= Auth(true,"Bienvenido")
+                    status=AuthState.AUTH
 
                 }catch (e:Exception){
                     Log.e("LoginViewModel",e.toString())
-                    _auth=Auth(false,"Error: ${e.message}")
+                    status=AuthState.NO_AUTH
                 }
             withContext(Dispatchers.Main){
-                observableAuth.value=_auth
+                _auth.value=status
             }
         }
 
     }
 
+    fun signOut(){
+        Firebase.auth.signOut()
+        _auth.value=AuthState.NO_AUTH
+    }
+
+}
+
+object AuthState{
+    const val NO_AUTH=0
+    const val LOADING=1
+    const val AUTH=2
 }

@@ -3,6 +3,7 @@ package com.example.residentmanagement.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.residentmanagement.databinding.ActivityLoginBinding
@@ -29,13 +30,17 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        viewModel.observableAuth.observe(this) {
-            if (it.auth) {
+        viewModel.auth.observe(this) {
+            if (it==2) {
+                binding.progressBar.visibility= View.GONE
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
-            } else {
-                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            } else if (it==0) {
+                binding.progressBar.visibility= View.GONE
+                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show()
+            }else{
+                binding.progressBar.visibility= View.VISIBLE
             }
         }
 
