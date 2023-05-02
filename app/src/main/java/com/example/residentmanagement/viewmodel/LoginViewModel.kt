@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.ktx.firestore
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
@@ -17,6 +18,8 @@ class LoginViewModel:ViewModel(){
 
     private val _auth=MutableLiveData<Int>()
     val auth:LiveData<Int> get()=_auth
+    //Firebase
+    private val db = Firebase.firestore
 
     fun getAuthState(){
         if(Firebase.auth.currentUser!=null) {
@@ -26,11 +29,16 @@ class LoginViewModel:ViewModel(){
         }
     }
 
-    fun signIn(email:String, password:String){
+    fun signIn(user:String, password:String){
         _auth.value=AuthState.LOADING
         var status:Int
         viewModelScope.launch(Dispatchers.IO) {
                 try {
+                    val docRef = db.collection("apartamentos").whereEqualTo("user", user)
+                        .get().await()
+
+                    val email=docRef.documents[0].get("email").toString()
+
                     val response=Firebase.auth.signInWithEmailAndPassword(email,password).await()
                     status=AuthState.AUTH
 
