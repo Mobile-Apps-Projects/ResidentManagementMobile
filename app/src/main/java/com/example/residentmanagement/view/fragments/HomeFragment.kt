@@ -1,16 +1,20 @@
 package com.example.residentmanagement.view.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.residentmanagement.databinding.FragmentHomeBinding
+import com.example.residentmanagement.utils.CurrencyFormatter
+import com.example.residentmanagement.utils.DateFormatter
 import com.example.residentmanagement.view.PaymentActivity
 import com.example.residentmanagement.view.adapters.NotificationAdapter
+import com.example.residentmanagement.viewmodel.InvoiceViewModel
 
 
 class HomeFragment : Fragment() {
@@ -18,11 +22,13 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     //Views models
+    private val invoiceViewModel: InvoiceViewModel by activityViewModels()
 
     //Adapters
     private val adapter = NotificationAdapter()
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +44,21 @@ class HomeFragment : Fragment() {
 
         binding.paymentButton.setOnClickListener{
             val intent= Intent(activity, PaymentActivity::class.java)
+            invoiceViewModel.debt.value?.let { it -> intent.putExtra("debt", it.total) }
             startActivity(intent)
         }
+
+        invoiceViewModel.debt.observe(viewLifecycleOwner) {
+
+                if (it != null) {
+                    binding.totalDebtTV.text = CurrencyFormatter.formatCurrency(it.total)
+                    binding.paymentDeadlineTV.text = DateFormatter.formatDate(it.date)
+                    binding.pendingInvoices.text = it.pendingInvoices.toString()
+                }
+
+
+        }
+
 
         return binding.root
 

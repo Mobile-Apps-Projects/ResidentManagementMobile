@@ -13,8 +13,6 @@ import com.example.residentmanagement.view.fragments.NotificationsFragment
 import com.example.residentmanagement.view.fragments.ProfileFragment
 import com.example.residentmanagement.view.fragments.ReserveFragment
 import com.example.residentmanagement.viewmodel.LoginViewModel
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 

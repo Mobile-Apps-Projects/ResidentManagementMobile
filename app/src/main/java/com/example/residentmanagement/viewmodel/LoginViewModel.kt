@@ -33,19 +33,25 @@ class LoginViewModel:ViewModel(){
         _auth.value=AuthState.LOADING
         var status:Int
         viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val docRef = db.collection("apartamentos").whereEqualTo("user", user)
-                        .get().await()
+            try {
+                Log.d(">>>",user)
 
-                    val email=docRef.documents[0].get("email").toString()
+                val docRef = db.collection("apartamentos").whereEqualTo("user", user)
+                    .get().await()
 
-                    val response=Firebase.auth.signInWithEmailAndPassword(email,password).await()
-                    status=AuthState.AUTH
 
-                }catch (e:Exception){
-                    Log.e("LoginViewModel",e.toString())
-                    status=AuthState.NO_AUTH
-                }
+                val email=docRef.documents[0].get("email").toString()
+
+                Log.d(">>>",email)
+
+
+                val response=Firebase.auth.signInWithEmailAndPassword(email,password).await()
+                status=AuthState.AUTH
+
+            }catch (e:Exception){
+                Log.e("LoginViewModel",e.toString())
+                status=AuthState.NO_AUTH
+            }
             withContext(Dispatchers.Main){
                 _auth.value=status
             }
