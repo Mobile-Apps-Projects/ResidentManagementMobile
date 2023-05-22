@@ -15,6 +15,7 @@ import com.example.residentmanagement.utils.DateFormatter
 import com.example.residentmanagement.view.PaymentActivity
 import com.example.residentmanagement.view.adapters.NotificationAdapter
 import com.example.residentmanagement.viewmodel.InvoiceViewModel
+import com.example.residentmanagement.viewmodel.NotificationsViewModel
 
 
 class HomeFragment : Fragment() {
@@ -23,10 +24,10 @@ class HomeFragment : Fragment() {
 
     //Views models
     private val invoiceViewModel: InvoiceViewModel by activityViewModels()
+    private val notificationsViewModel: NotificationsViewModel by activityViewModels()
 
     //Adapters
     private val adapter = NotificationAdapter()
-
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -41,6 +42,14 @@ class HomeFragment : Fragment() {
         binding.notificationsList.layoutManager = LinearLayoutManager(activity)
         binding.notificationsList.setHasFixedSize(true)
 
+        notificationsViewModel.notifications.observe(viewLifecycleOwner){
+            if(it.size>0){
+                adapter.addNotification(it.last())
+                adapter.notifyItemInserted(it.lastIndex)
+            }
+        }
+
+        notificationsViewModel.getNotifications()
 
         binding.paymentButton.setOnClickListener{
             val intent= Intent(activity, PaymentActivity::class.java)
