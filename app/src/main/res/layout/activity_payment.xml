@@ -25,7 +25,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <Button
-        android:id="@+id/paymentButton3"
+        android:id="@+id/goToPay"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
