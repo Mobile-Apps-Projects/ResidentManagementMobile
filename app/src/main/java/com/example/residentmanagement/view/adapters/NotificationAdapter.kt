@@ -9,20 +9,28 @@ import com.example.residentmanagement.model.Notification
 import com.example.residentmanagement.view.MainActivity
 import com.example.residentmanagement.view.dialogs.NotificationDialog
 import com.example.residentmanagement.view.viewholders.NotificationVH
+import com.google.firebase.Timestamp
+import java.time.LocalDateTime
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class NotificationAdapter : RecyclerView.Adapter<NotificationVH>() {
     var notifications = ArrayList<Notification>()
 
-    init {
-        notifications.add(Notification("Corte de agua", "El día 10 de marzo será suspendido el servicio de agua ...", "10 min","administación"))
-        notifications.add(Notification("Corte de GAS", "El día 10 de marzo será suspendido el servicio de agua ...", "10 min","APTO403"))
-        notifications.add(Notification("Corte de luz", "El día 10 de marzo será suspendido el servicio de agua ...", "10 min","APTO403"))
-        notifications.add(Notification("Corte de agua", "El día 10 de marzo será suspendido el servicio de agua ...", "10 min","administación"))
-        notifications.add(Notification("Corte de GAS", "El día 10 de marzo será suspendido el servicio de agua ...", "10 min","APTO403"))
+//    init {
+//        notifications.add(Notification("1","Corte de agua", "El día 10 de marzo será suspendido el servicio de agua ...", Timestamp(Date()), "apartamentos/spqO2yAWlx9w7uPuFkMZ", "apartamentos/spqO2yAWlx9w7uPuFkMZ"))
+//        notifications.add(Notification("2","Corte de GAS", "El día 10 de marzo será suspendido el servicio de agua ...", Timestamp(Date()),"apartamentos/spqO2yAWlx9w7uPuFkMZ", "apartamentos/spqO2yAWlx9w7uPuFkMZ"))
+//        notifications.add(Notification("3","Corte de luz", "El día 10 de marzo será suspendido el servicio de agua ...", Timestamp(Date()),"apartamentos/spqO2yAWlx9w7uPuFkMZ", "apartamentos/spqO2yAWlx9w7uPuFkMZ"))
+//        notifications.add(Notification("4","Corte de agua", "El día 10 de marzo será suspendido el servicio de agua ...", Timestamp(Date()),"apartamentos/spqO2yAWlx9w7uPuFkMZ", "apartamentos/spqO2yAWlx9w7uPuFkMZ"))
+//        notifications.add(Notification("5","Corte de GAS", "El día 10 de marzo será suspendido el servicio de agua ...", Timestamp(Date()),"apartamentos/spqO2yAWlx9w7uPuFkMZ", "apartamentos/spqO2yAWlx9w7uPuFkMZ"))
+//    }
 
-
-
-
+    fun addNotification(notification: Notification) {
+        if(!notifications.contains(notification)) {
+            notifications.add(notification)
+            notifyItemInserted(notifications.lastIndex)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationVH {
@@ -31,9 +39,13 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationVH>() {
     }
 
     override fun onBindViewHolder(holder: NotificationVH, position: Int) {
-        holder.title.text = notifications[position].title
-        holder.description.text = notifications[position].description
-        holder.time.text = notifications[position].time
+        holder.title.text = notifications[position].titulo
+        holder.description.text = notifications[position].contenido
+
+        val differenceInMillis = Date().time - notifications[position].date.toDate().time
+        val differenceInMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceInMillis)
+        val time = "$differenceInMinutes min"
+        holder.time.text = time
         holder.detailButton.setOnClickListener {
             //Open dialog fragment
             val fragmentManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager

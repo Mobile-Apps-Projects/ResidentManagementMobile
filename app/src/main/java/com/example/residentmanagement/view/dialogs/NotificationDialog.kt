@@ -20,10 +20,10 @@ class NotificationDialog(private val notification: Notification) : DialogFragmen
         val builder = AlertDialog.Builder(requireActivity())
 
         //Set all the data
-        binding.title.text = notification.title
-        binding.description.text = notification.description
-        binding.time.text = notification.time
-        binding.from.text = "Enviado desde: " + notification.from
+        binding.title.text = notification.titulo
+        binding.description.text = notification.contenido
+        binding.time.text = notification.date.toString()
+        binding.from.text = "Enviado desde: " + notification.src
 
         builder.setView(binding.root)
 
