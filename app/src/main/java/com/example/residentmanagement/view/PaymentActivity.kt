@@ -31,6 +31,23 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         binding.goToPay.setOnClickListener {
+            //Validate billvalue no empty and email
+
+            if (binding.billValueTF.text.isEmpty()) {
+                binding.billValueTF.error = "Ingrese un valor"
+                return@setOnClickListener
+            }
+
+            if (binding.email.text.isEmpty()) {
+                binding.email.error = "Ingrese un email"
+                return@setOnClickListener
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.email.text).matches()) {
+                binding.email.error = "Ingrese un email valido"
+                return@setOnClickListener
+            }
+
             val webView = WebView(this)
             webView.webViewClient = WebViewClient()
             webView.settings.javaScriptEnabled = true
@@ -43,8 +60,8 @@ class PaymentActivity : AppCompatActivity() {
                     setFormValues(
                         '${binding.billValueTF.text}',
                         'Test PAYU',
-                        'Test PAYU4',
-                        'test@test.com',
+                        'Test PAYU41',
+                        '${binding.email.text}',
                     );
                 })();
             """.trimIndent()
