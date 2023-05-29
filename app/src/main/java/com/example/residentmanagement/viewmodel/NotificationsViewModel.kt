@@ -22,14 +22,16 @@ class NotificationsViewModel:ViewModel() {
 
     fun getNotifications(){
         viewModelScope.launch(Dispatchers.Main) {
-            val currentUserUID = Firebase.auth.currentUser!!.uid
+            val currentUserUID = Firebase.auth.currentUser?.uid
 
-            val query = Firebase.firestore
-                .collection("apartamentos").document(currentUserUID).collection("mensajes")
-                .get().await()
+            val query = currentUserUID?.let {
+                Firebase.firestore
+                    .collection("apartamentos").document(it).collection("mensajes")
+                    .get().await()
+            }
 
             Log.d(">>>","test log")
-            query.forEach { document ->
+            query?.forEach { document ->
                 val data = document.data
                 data.forEach { (field, value) ->
                     Log.d("TAG", "$field: $value")
@@ -37,12 +39,14 @@ class NotificationsViewModel:ViewModel() {
                 Log.d("TAG", "-------------------")
             }
 
-            for (change in query.documentChanges){
-                if(change.type == DocumentChange.Type.ADDED) {
-                    val notification = change.document.toObject(Notification::class.java)
-                    data.add(notification)
-                    withContext(Dispatchers.Main){
-                        _notifications.value = data
+            if (query != null) {
+                for (change in query.documentChanges){
+                    if(change.type == DocumentChange.Type.ADDED) {
+                        val notification = change.document.toObject(Notification::class.java)
+                        data.add(notification)
+                        withContext(Dispatchers.Main){
+                            _notifications.value = data
+                        }
                     }
                 }
             }
