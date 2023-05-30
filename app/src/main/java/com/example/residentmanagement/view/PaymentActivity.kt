@@ -60,7 +60,7 @@ class PaymentActivity : AppCompatActivity() {
                     setFormValues(
                         '${binding.billValueTF.text}',
                         'Test PAYU',
-                        'Test PAYU41',
+                        'Test PAYU_TEST',
                         '${binding.email.text}',
                     );
                 })();
