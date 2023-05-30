@@ -13,6 +13,9 @@ import com.example.residentmanagement.view.fragments.NotificationsFragment
 import com.example.residentmanagement.view.fragments.ProfileFragment
 import com.example.residentmanagement.view.fragments.ReserveFragment
 import com.example.residentmanagement.viewmodel.LoginViewModel
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
+import edu.co.icesi.firestoreejemplokotlin.util.NotificationUtil
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +33,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
+        
+        Firebase.messaging.subscribeToTopic("all")
 
         viewModel.auth.observe(this) {
             if (it == 0) {

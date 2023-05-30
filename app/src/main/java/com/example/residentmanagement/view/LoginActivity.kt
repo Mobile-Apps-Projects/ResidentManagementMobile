@@ -10,6 +10,7 @@ import com.example.residentmanagement.databinding.ActivityLoginBinding
 import com.example.residentmanagement.viewmodel.LoginViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
             if (it==2) {
                 binding.progressBar.visibility= View.GONE
                 val intent = Intent(this, MainActivity::class.java)
+                Firebase.messaging.subscribeToTopic(Firebase.auth.currentUser!!.uid)
                 startActivity(intent)
                 finish()
             } else if (it==0) {
