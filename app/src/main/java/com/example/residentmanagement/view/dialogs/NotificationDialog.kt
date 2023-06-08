@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.residentmanagement.databinding.DialogNotificationBinding
 import com.example.residentmanagement.model.Notification
+import java.text.SimpleDateFormat
 
 class NotificationDialog(private val notification: Notification) : DialogFragment() {
 
@@ -22,7 +23,10 @@ class NotificationDialog(private val notification: Notification) : DialogFragmen
         //Set all the data
         binding.title.text = notification.titulo
         binding.description.text = notification.contenido
-        binding.time.text = notification.date.toString()
+//        binding.time.text =
+        val timestamp =notification.date.toDate()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
+        binding.time.text = dateFormat.format(timestamp)
         binding.from.text = "Enviado desde: " + notification.src
 
         builder.setView(binding.root)

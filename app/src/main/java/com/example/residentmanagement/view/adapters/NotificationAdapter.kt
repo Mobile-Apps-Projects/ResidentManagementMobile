@@ -41,10 +41,18 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationVH>() {
     override fun onBindViewHolder(holder: NotificationVH, position: Int) {
         holder.title.text = notifications[position].titulo
         holder.description.text = notifications[position].contenido
-
         val differenceInMillis = Date().time - notifications[position].date.toDate().time
         val differenceInMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceInMillis)
-        val time = "$differenceInMinutes min"
+        val time: String = if (differenceInMinutes > 1440) {
+            val differenceInDays = TimeUnit.MINUTES.toDays(differenceInMinutes)
+            "$differenceInDays días"
+        }else if (differenceInMinutes > 60) {
+            val differenceInHours = TimeUnit.MINUTES.toHours(differenceInMinutes)
+            "$differenceInHours horas"
+        }
+            else {
+            "$differenceInMinutes min"
+        }
         holder.time.text = time
         holder.detailButton.setOnClickListener {
             //Open dialog fragment
