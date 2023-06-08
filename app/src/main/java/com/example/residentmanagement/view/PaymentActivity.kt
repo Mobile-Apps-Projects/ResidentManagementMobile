@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.residentmanagement.databinding.ActivityPaymentBinding
 import com.example.residentmanagement.utils.CurrencyFormatter
+import java.util.UUID
 
 class PaymentActivity : AppCompatActivity() {
 
@@ -51,7 +52,7 @@ class PaymentActivity : AppCompatActivity() {
             val webView = WebView(this)
             webView.webViewClient = WebViewClient()
             webView.settings.javaScriptEnabled = true
-
+            val transactionID = UUID.randomUUID()
 
             webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -60,7 +61,7 @@ class PaymentActivity : AppCompatActivity() {
                     setFormValues(
                         '${binding.billValueTF.text}',
                         'Test PAYU',
-                        'Test PAYU41',
+                        '${transactionID}',
                         '${binding.email.text}',
                     );
                 })();

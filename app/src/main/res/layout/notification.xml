@@ -48,7 +48,7 @@
                     android:id="@+id/profileImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+                    app:srcCompat="@drawable/round_button" />
             </androidx.cardview.widget.CardView>
 
             <TextView
