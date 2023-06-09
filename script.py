@@ -1,64 +1,134 @@
 import requests
+import argparse
 
-# Define the Firestore API endpoint URL
-url = "https://firestore.googleapis.com/v1/projects/residentmanagement-dc0b3/databases/(default)/documents/apartamentos/spqO2yAWlx9w7uPuFkMZ/facturas"
+parser = argparse.ArgumentParser(description="Create a new document in Firestore.")
+parser.add_argument("option", choices=["create", "delete"], help="Create or delete a document.")
 
-# Define the request payload
-payload = {
-  "fields": {
-    "concepto": {
-      "stringValue": "Example Concept"
-    },
-    "date": {
-      "timestampValue": "2023-05-01T00:00:00Z"
-    },
-    "valor": {
-      "doubleValue": 1500000.99
+args = parser.parse_args()
+
+invoice_url = "https://firestore.googleapis.com/v1/projects/residentmanagement-dc0b3/databases/(default)/documents/apartamentos/spqO2yAWlx9w7uPuFkMZ/facturas"
+message_url = "https://firestore.googleapis.com/v1/projects/residentmanagement-dc0b3/databases/(default)/documents/apartamentos/mRzTe1DIdpauuoK3xfTnXX9tBPy1/mensajes"
+
+if args.option == "create":
+    print("Creating a new document...")
+
+    invoice = {
+      "fields": {
+        "concepto": {
+          "stringValue": "Example Concept"
+        },
+        "date": {
+          "timestampValue": "2023-06-11T00:00:00Z"
+        },
+        "valor": {
+          "doubleValue": 150000.99
+        }
+      }
     }
-  }
-}
 
-# Send the POST request to create the document
-response = requests.post(url, json=payload)
+    invoice_response = requests.post(invoice_url, json=invoice)
+    print(invoice_response.json())
 
-# Extract the generated ID from the response
-document_id = response.json().get("name").split("/")[-1]
+    invoice_id = invoice_response.json().get("name").split("/")[-1]
+    with open("invoice_id.txt", "w") as f:
+        f.write(invoice_id)
 
-# Update the "id" field with the generated ID
-payload["fields"]["id"] = {
-  "stringValue": document_id
-}
-
-# Define the URL for updating the document
-update_url = f"{url}/{document_id}"
-
-# Send the PATCH request to update the document with the generated ID
-update_response = requests.patch(update_url, json=payload)
-print(update_response.json())
-# Check the response status code
-if update_response.ok:
-  print("Document created and updated successfully!")
-else:
-  print("Failed to create or update the document.")
-
-# Send notification about new invoice
-notify_url = "https://fcm.googleapis.com/fcm/send"
-
-headers = {
-    "Authorization": "key=AAAAHZhxqnQ:APA91bGV9W7AmAD6AyIVTvr8TR4LTBRUuNu0dG6TjT0uttd29XPfbiTmMyTU1CPs830yCJ4wFDBgTHX5Gni0oXqqgT2-ZCKfQoOshOa7K3tnPCgzW_Hr-SXZqykC1U_2UmVvbaBWZnOe",
-    "Content-Type": "application/json"
-}
-data = {
-    "to": "/topics/all",
-    "data": {
-        "titulo": "Nueva Factura",
-        "contenido": "Tiene una factura pendiente por pagar"
+    invoice["fields"]["id"] = {
+      "stringValue": invoice_id
     }
-}
 
-notification_response = requests.post(notify_url, headers=headers, json=data)
+    update_url = f"{invoice_url}/{invoice_id}"
 
-if notification_response.status_code == 200:
-    print("Notification sent successfully!")
-else:
-    print("Failed to send notification. Error:", response.text)
+    update_response = requests.patch(update_url, json=invoice)
+
+    if update_response.ok:
+      print("Invoice created and updated successfully!")
+    else:
+      print("Failed to create or update the invoice.")
+
+
+    message = {
+        "fields": {
+            "contenido": {
+                "stringValue": "El día 10 de marzo será suspendido el servicio de electricidad..."
+            },
+            "date": {
+                "timestampValue": "2023-06-09T19:20:00Z"
+            },
+            "titulo": {
+                "stringValue": "Corte electricidad"
+            },
+            "src": {
+                "stringValue": "Administración"
+            }
+        }
+    }
+
+    message_response = requests.post(message_url, json=message)
+
+    message_id = message_response.json().get("name").split("/")[-1]
+
+    message["fields"]["id"] = {
+        "stringValue": message_id
+    }
+
+    update_url = f"{message_url}/{message_id}"
+
+    update_response = requests.patch(update_url, json=message)
+
+    if update_response.ok:
+        print("Message created and updated successfully!")
+    else:
+        print("Failed to create or update the message.")
+
+elif args.option == "delete":
+    print("Deleting an invoice...")
+
+    with open("invoice_id.txt", "r") as f:
+        invoice_id = f.read()
+
+    delete_url = f"{invoice_url}/{invoice_id}"
+
+    delete_response = requests.delete(delete_url)
+
+    if delete_response.ok:
+        print("Document deleted successfully!")
+        with open("invoice_id.txt", "w") as f:
+            f.truncate(0)
+    else:
+        print("Failed to delete the document.")
+
+
+    payed_message = {
+        "fields": {
+            "contenido": {
+                "stringValue": "Su pago para la factura de junio fue recibido exitosamente."
+            },
+            "date": {
+                "timestampValue": "2023-06-20T19:40:00Z"
+            },
+            "titulo": {
+                "stringValue": "Pago recibido"
+            },
+            "src": {
+                "stringValue": "Administración"
+            }
+        }
+    }
+
+    message_response = requests.post(message_url, json=payed_message)
+
+    message_id = message_response.json().get("name").split("/")[-1]
+
+    payed_message["fields"]["id"] = {
+        "stringValue": message_id
+    }
+
+    update_url = f"{message_url}/{message_id}"
+
+    update_response = requests.patch(update_url, json=payed_message)
+
+    if update_response.ok:
+        print("Message created and updated successfully!")
+    else:
+        print("Failed to create or update the message.")
