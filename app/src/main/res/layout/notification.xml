@@ -46,15 +46,10 @@
 
                 <ImageView
                     android:id="@+id/profileImg"
-<<<<<<< HEAD
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/logo" />
-=======
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/round_button" />
->>>>>>> 59eb0abe2339ed3877e1541e001a2d2142fb6042
+
             </androidx.cardview.widget.CardView>
 
             <TextView
