@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.residentmanagement.databinding.ActivityPaymentBinding
 import com.example.residentmanagement.utils.CurrencyFormatter
+import java.util.UUID
 
 class PaymentActivity : AppCompatActivity() {
 
@@ -31,10 +32,27 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         binding.goToPay.setOnClickListener {
+            //Validate billvalue no empty and email
+
+            if (binding.billValueTF.text.isEmpty()) {
+                binding.billValueTF.error = "Ingrese un valor"
+                return@setOnClickListener
+            }
+
+            if (binding.email.text.isEmpty()) {
+                binding.email.error = "Ingrese un email"
+                return@setOnClickListener
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.email.text).matches()) {
+                binding.email.error = "Ingrese un email valido"
+                return@setOnClickListener
+            }
+
             val webView = WebView(this)
             webView.webViewClient = WebViewClient()
             webView.settings.javaScriptEnabled = true
-
+            val transactionID = UUID.randomUUID()
 
             webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -43,8 +61,8 @@ class PaymentActivity : AppCompatActivity() {
                     setFormValues(
                         '${binding.billValueTF.text}',
                         'Test PAYU',
-                        'Test PAYU4',
-                        'test@test.com',
+                        '${transactionID}',
+                        '${binding.email.text}',
                     );
                 })();
             """.trimIndent()
